@@ -60,4 +60,30 @@ export default class ElevatorsManager {
     this.elevators.forEach((e) => e.start());
     this.floorsAmount = floorsAmount;
   }
+
+  callElevator(floor) {
+    const isAnyElevatorOnFloor = this.elevators.some((elevator) => {
+      return elevator.status !== "MOVING" && elevator.position === floor;
+    });
+    if (isAnyElevatorOnFloor) return;
+
+    const isFloorInWork = this.elevators.some((elevator) =>
+      elevator.isInWork(floor)
+    );
+    if (isFloorInWork) return;
+    const minimallyLoadedElevator = this._getMinimallyLoadedElevator(floor);
+    minimallyLoadedElevator.addCall(floor);
+  }
+
+  _getMinimallyLoadedElevator(toFloor) {
+    const idleElevators = this.elevators.filter((el) => el.status === "IDLE");
+    if (idleElevators.length) {
+      return this._getClosestElevatorToFloor(idleElevators, toFloor);
+    }
+    const floorsInWork = this.elevators.map((el) => el.floorCalls.length);
+    const minimalLoad = Math.min(...floorsInWork);
+    const m = this.elevators.find((el) => (el.floorCalls.length === minimalLoad));
+    console.log('minimally loaded', { floorsInWork, minimalLoad, m})
+    return m 
+  }
 }
