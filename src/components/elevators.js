@@ -9,6 +9,11 @@ class Elevator {
     this.status = "IDLE";
     this.floorCalls = [];
   }
-}
+  isInWork(floor) {
+    return this.floorCalls.includes(floor);
+  }
+  addCall(floor) {
+    this.floorCalls.push(floor);
+  }
 export default class ElevatorsManager {
 }
