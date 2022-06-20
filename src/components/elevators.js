@@ -32,5 +32,24 @@ class Elevator {
     }
   }
 
+  async _wait() {
+    this.status = "WAITING";
+    return wait(WAITING);
+  }
+
+  async _move(destination) {
+    this.status = "MOVING";
+    while (this.position !== destination) {
+      await wait(SPEED);
+      if (destination > this.position) {
+        this.position++;
+      } else {
+        this.position--;
+      }
+    }
+    return;
+  }
+}
+
 export default class ElevatorsManager {
 }
