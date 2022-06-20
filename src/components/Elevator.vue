@@ -1,3 +1,25 @@
+<template>
+  <div>
+    <tr
+      v-for="floor in Array.from(
+        { length: this.floors },
+        (_, i) => i + 1
+      ).reverse()"
+      :key="floor"
+    >
+      <td>
+        <button :value="floor" @click="callElevator(floor)">{{ floor }}</button>
+      </td>
+      <td
+        class="cell"
+        v-for="(elevator, index) in elevatorManager.elevators"
+        :key="index"
+      >
+        <div v-if="elevator.position === floor" class="elevator"></div>
+      </td>
+    </tr>
+  </div>
+</template>
 <script>
 import ElevatorsManager from "./elevators";
 export default {
