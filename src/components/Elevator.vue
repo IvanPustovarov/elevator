@@ -20,6 +20,7 @@
     </tr>
   </div>
 </template>
+
 <script>
 import ElevatorsManager from "./elevators";
 export default {
@@ -41,6 +42,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .cell {
   outline: 1px solid blue;
