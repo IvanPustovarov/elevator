@@ -9,6 +9,7 @@ class Elevator {
     this.status = "IDLE";
     this.floorCalls = [];
   }
+
   isInWork(floor) {
     return this.floorCalls.includes(floor);
   }
@@ -83,7 +84,14 @@ export default class ElevatorsManager {
     const floorsInWork = this.elevators.map((el) => el.floorCalls.length);
     const minimalLoad = Math.min(...floorsInWork);
     const m = this.elevators.find((el) => (el.floorCalls.length === minimalLoad));
-    console.log('minimally loaded', { floorsInWork, minimalLoad, m})
     return m 
+  }
+
+  _getClosestElevatorToFloor(elevators, floor) {
+    return elevators.reduce((prev, curr) =>
+      Math.abs(curr.position - floor) < Math.abs(prev.position - floor)
+        ? curr
+        : prev
+    );
   }
 }
