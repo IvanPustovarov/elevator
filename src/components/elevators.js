@@ -52,4 +52,12 @@ class Elevator {
 }
 
 export default class ElevatorsManager {
+  constructor(elevatorsAmount = 1, floorsAmount = 5) {
+    this.elevators = [];
+    for (let i = 1; i <= elevatorsAmount; i++) {
+      this.elevators.push(new Elevator());
+    }
+    this.elevators.forEach((e) => e.start());
+    this.floorsAmount = floorsAmount;
+  }
 }
